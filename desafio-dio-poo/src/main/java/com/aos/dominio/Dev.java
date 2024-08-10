@@ -31,28 +31,22 @@ public class Dev {
         .sum();
   }
 
+  public void listarConteudosInscritos() {
+    System.out.println(String.format("==== Conteúdos inscritos %s ====", this.nome));
+    this.conteudosInscritos.stream().forEach(conteudo -> System.out.println(conteudo.getTitulo()));
+  }
+
+  public void listarConteudosConcluidos() {
+    System.out.println(String.format("==== Conteúdos concluídos %s ====", this.nome));
+    this.conteudosConcluidos.stream().forEach(conteudo -> System.out.println(conteudo.getTitulo()));
+  }
+
   public String getNome() {
     return nome;
   }
 
   public void setNome(String nome) {
     this.nome = nome;
-  }
-
-  public Set<Conteudo> getConteudosInscritos() {
-    return conteudosInscritos;
-  }
-
-  public void setConteudosInscritos(Set<Conteudo> conteudosInscritos) {
-    this.conteudosInscritos = conteudosInscritos;
-  }
-
-  public Set<Conteudo> getConteudosConcluidos() {
-    return conteudosConcluidos;
-  }
-
-  public void setConteudosConcluidos(Set<Conteudo> conteudosConcluidos) {
-    this.conteudosConcluidos = conteudosConcluidos;
   }
 
   @Override

@@ -14,6 +14,10 @@ public class Bootcamp {
   private Set<Dev> devsInscritos = new HashSet<>();
   private Set<Conteudo> conteudos = new LinkedHashSet<>();
 
+  public void addDev(Dev dev) {
+    this.devsInscritos.add(dev);
+  }
+
   public String getNome() {
     return nome;
   }
@@ -107,10 +111,6 @@ public class Bootcamp {
     } else if (!conteudos.equals(other.conteudos))
       return false;
     return true;
-  }
-
-  public void addDev(Dev dev) {
-    this.devsInscritos.add(dev);
   }
 
 }

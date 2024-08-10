@@ -2,16 +2,20 @@ package com.aos;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import com.aos.dominio.Bootcamp;
+import com.aos.dominio.Conteudo;
 import com.aos.dominio.Curso;
+import com.aos.dominio.Dev;
 import com.aos.dominio.Mentoria;
 
 public class Main {
         public static void main(String[] args) {
                 Curso curso = new Curso();
-                curso.setTitulo(" Bootcamp Claro - Java com Spring");
-                curso.setDescricao(
-                                "Nesta trilha, você vai desenvolver suas habilidades com projetos práticos, desafios de códigos e mentorias com experts da DIO e Claro, além disso, ficará disponível na Talent Match para tech recrutadores de empresas parceiras que procuram profissionais com esse perfil.");
+                curso.setTitulo("Try/Catch");
+                curso.setDescricao("Java e Tratamento de Exceções");
                 curso.setCargaHoraria(75);
 
                 Mentoria mentoria = new Mentoria();
@@ -22,7 +26,23 @@ public class Main {
                                 Month.AUGUST, 13, 16, 00, 00);
                 mentoria.setData(data);
 
-                System.out.println(curso);
-                System.out.println(mentoria);
+                Bootcamp bootcamp = new Bootcamp();
+                bootcamp.setNome("Claro - Java com Spring Boot");
+                bootcamp.setDescricao("Construa uma API com Java e Spring de ponta a ponta!");
+
+                Set<Conteudo> conteudos = new LinkedHashSet<>();
+                conteudos.add(curso);
+                conteudos.add(mentoria);
+
+                bootcamp.setConteudos(conteudos);
+
+                Dev devArilson = new Dev();
+                devArilson.setNome("Arilson");
+
+                devArilson.inscreverBootcamp(bootcamp);
+
+                devArilson.listarConteudosInscritos();
+                devArilson.progredir();
+                devArilson.listarConteudosConcluidos();
         }
 }
