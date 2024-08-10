@@ -109,4 +109,8 @@ public class Bootcamp {
     return true;
   }
 
+  public void addDev(Dev dev) {
+    this.devsInscritos.add(dev);
+  }
+
 }
