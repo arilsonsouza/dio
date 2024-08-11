@@ -37,4 +37,10 @@ public class ContaTeste {
     Mockito.verify(conta, Mockito.times(3)).validaSaldo(anyInt());
   }
 
+  @Test
+  public void retornaTrueParaQualquerValorNaValidacaoDeSaldo() {
+    Mockito.doNothing().when(conta).validaSaldo(anyInt());
+
+    conta.validaSaldo(3500);
+  }
 }

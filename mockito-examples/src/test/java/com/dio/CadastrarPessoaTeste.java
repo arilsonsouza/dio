@@ -3,7 +3,7 @@ package com.dio;
 import java.time.LocalDate;
 
 import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +16,7 @@ import com.dio.mockito.examplos.DadosLocalizacao;
 import com.dio.mockito.examplos.Pessoa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CadastrarPessoaTeste {
@@ -38,5 +39,13 @@ public class CadastrarPessoaTeste {
     assertEquals("MG", pessoa.getEndereco().getUf());
     assertEquals("Patos de Minas", pessoa.getEndereco().getCidade());
 
+  }
+
+  @Test
+  public void lancarExceptionQuandoChamarApiCorreios() {
+    Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep(anyString())).thenThrow(IllegalArgumentException.class);
+
+    Assertions.assertThrows(IllegalArgumentException.class,
+        () -> cadastrarPessoa.cadastrarPessoa("Arilson", "00000000000", LocalDate.now(), "44905000"));
   }
 }
