@@ -3,7 +3,7 @@ package com.dio.mockito.examplos;
 public class ServicoEnvioEmail {
   private PlataformaDeEnvio plataforma;
 
-  void enviaEmail(String enderecoEmail, String mensagem, boolean formatoHtml) {
+  public void enviaEmail(String enderecoEmail, String mensagem, boolean formatoHtml) {
 
     Email email = null;
 
