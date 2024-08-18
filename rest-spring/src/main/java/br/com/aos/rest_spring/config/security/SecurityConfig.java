@@ -49,7 +49,7 @@ public class SecurityConfig {
             .requestMatchers(WHITE_LIST_URL).permitAll()
             .requestMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/v1/auth/signup").permitAll()
-            .requestMatchers("/api/v1/tasks/**").hasAnyRole("ADMIN", "USER")
+            .requestMatchers("/api/v1/products/**").hasAnyRole("ADMIN")
             .anyRequest()
             .authenticated())
         .exceptionHandling(
