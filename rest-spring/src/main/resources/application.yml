@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
+spring:
+  application:
+    name: rest-spring
+
+taskboard:
+  app:
+    jwt_issuer: rest-spring-api
+    jwt_secret: hqS6RGmay6URl00U01CZEad1wD/2dTQA/FQBwfYlDe2jDBCc7Wp7dPQGDkm/YEh+
+    jwt_expiration_in_minutes: 120
