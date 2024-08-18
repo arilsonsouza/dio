@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.aos.rest_spring.controller.DTO.ProductDTO;
+import br.com.aos.rest_spring.controller.DTO.ApiResponseDTO;
+import br.com.aos.rest_spring.controller.DTO.product.ProductDTO;
+import br.com.aos.rest_spring.controller.DTO.product.ProductResponseDTO;
+import br.com.aos.rest_spring.controller.DTO.product.ProductsDTO;
 import br.com.aos.rest_spring.entity.Product;
 import br.com.aos.rest_spring.service.ProductService;
 import jakarta.validation.Valid;
@@ -25,22 +28,26 @@ public class ProductController {
   private ProductService productService;
 
   @PostMapping
-  public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO) {
+  public ResponseEntity<ApiResponseDTO<ProductResponseDTO>> save(@Valid @RequestBody ProductDTO productDTO) {
     Product product = productService.save(productDTO.toEntity());
-    return ResponseEntity.ok().body(ProductDTO.fromEntity(product));
+    ProductResponseDTO response = new ProductResponseDTO(ProductDTO.fromEntity(product));
+    return ResponseEntity.ok()
+        .body(ApiResponseDTO.success(response, "Product created successfuly"));
   }
 
   @GetMapping(value = "/{id}")
-  public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+  public ResponseEntity<ApiResponseDTO<ProductResponseDTO>> findById(@PathVariable Long id) {
     Product product = productService.findById(id);
-    return ResponseEntity.ok().body(ProductDTO.fromEntity(product));
+    ProductResponseDTO response = new ProductResponseDTO(ProductDTO.fromEntity(product));
+    return ResponseEntity.ok().body(ApiResponseDTO.success(response, null));
   }
 
   @GetMapping
-  public ResponseEntity<List<ProductDTO>> findAll() {
+  public ResponseEntity<ApiResponseDTO<ProductsDTO>> findAll() {
     List<ProductDTO> products = productService.findAll().stream().map(ProductDTO::fromEntity)
         .collect(Collectors.toList());
 
-    return ResponseEntity.ok().body(products);
+    ProductsDTO response = new ProductsDTO(products);
+    return ResponseEntity.ok().body(ApiResponseDTO.success(response, null));
   }
 }
