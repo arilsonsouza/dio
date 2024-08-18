@@ -19,7 +19,7 @@ public class ProductService {
   }
 
   public Product findById(Long id) {
-    return productRepository.findById(id).orElse(null);
+    return productRepository.findById(id).get();
   }
 
   public List<Product> findAll() {

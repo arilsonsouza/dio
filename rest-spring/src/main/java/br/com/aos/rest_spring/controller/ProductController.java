@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.aos.rest_spring.controller.DTO.ProductDTO;
 import br.com.aos.rest_spring.entity.Product;
 import br.com.aos.rest_spring.service.ProductService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/v1/products")
@@ -24,7 +25,7 @@ public class ProductController {
   private ProductService productService;
 
   @PostMapping
-  public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDTO) {
+  public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO) {
     Product product = productService.save(productDTO.toEntity());
     return ResponseEntity.ok().body(ProductDTO.fromEntity(product));
   }
