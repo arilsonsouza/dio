@@ -43,11 +43,32 @@ public class EmployeeDAO {
   }
 
   public void update(final Employee employee) {
+    try {
+      String sql = "UPDATE employees SET name=?, salary=?, birthday=? WHERE id=?";
+      var statement = connection.prepareStatement(sql);
+      statement.setString(1, employee.getName());
+      statement.setBigDecimal(2, employee.getSalary());
+      statement.setTimestamp(3, asTimestamp(employee.getBirthday()));
+      statement.setLong(4, employee.getId());
+      statement.executeUpdate();
 
+      System.out.printf("Foram atualizados %s registros no DB", statement.getUpdateCount());
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public void delete(final long id) {
-
+    try {
+      String sql = "DELETE FROM employees WHERE id = ?";
+      var statement = connection.prepareStatement(sql);
+      statement.setLong(1, id);
+      statement.executeUpdate();
+      System.out.printf("Foram deletados %s registros no DB", statement.getUpdateCount());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public List<Employee> findAll() {

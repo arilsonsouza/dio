@@ -35,5 +35,14 @@ public class App {
         System.out.println("FIND BY ID");
         System.out.println(employeeDAO.findById(1L));
 
+        System.out.println("UPDATE");
+        employee.setId(1);
+        employee.setName("João");
+        employee.setSalary(new BigDecimal("12563"));
+        employee.setBirthday(OffsetDateTime.now().minusYears(28));
+        employeeDAO.update(employee);
+
+        System.out.println("DELETE");
+        employeeDAO.delete(1);
     }
 }
