@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.aos.persistence.ConnectionUtil;
@@ -50,11 +51,48 @@ public class EmployeeDAO {
   }
 
   public List<Employee> findAll() {
-    return null;
+    List<Employee> employees = new ArrayList<>();
+    try {
+      String sql = "SELECT id, name, salary, birthday FROM employees";
+      var statement = connection.prepareStatement(sql);
+      ResultSet rs = statement.executeQuery();
+      while (rs.next()) {
+        Employee employee = new Employee();
+        employee.setId(rs.getLong("id"));
+        employee.setName(rs.getString("name"));
+        employee.setSalary(rs.getBigDecimal("salary"));
+        var birthdayInstant = rs.getTimestamp("birthday").toInstant();
+        var birthday = OffsetDateTime.ofInstant(birthdayInstant, ZoneOffset.UTC);
+        employee.setBirthday(birthday);
+
+        employees.add(employee);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return employees;
   }
 
   public Employee findById(final long id) {
-    return null;
+    Employee employee = new Employee();
+    try {
+      String sql = "SELECT id, name, salary, birthday FROM employees WHERE id = ?";
+      var statement = connection.prepareStatement(sql);
+      statement.setLong(1, id);
+      ResultSet rs = statement.executeQuery();
+      if (rs.next()) {
+        employee.setId(rs.getLong("id"));
+        employee.setName(rs.getString("name"));
+        employee.setSalary(rs.getBigDecimal("salary"));
+        var birthdayInstant = rs.getTimestamp("birthday").toInstant();
+        var birthday = OffsetDateTime.ofInstant(birthdayInstant, ZoneOffset.UTC);
+        employee.setBirthday(birthday);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return employee;
   }
 
   public Timestamp asTimestamp(OffsetDateTime offsetDateTime) {

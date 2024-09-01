@@ -28,6 +28,12 @@ public class App {
         employee.setBirthday(OffsetDateTime.now().minusYears(20));
 
         employeeDAO.insert(employee);
-        System.out.println(employee);
+
+        System.out.println("LIST ALL");
+        employeeDAO.findAll().forEach(System.out::println);
+
+        System.out.println("FIND BY ID");
+        System.out.println(employeeDAO.findById(1L));
+
     }
 }
