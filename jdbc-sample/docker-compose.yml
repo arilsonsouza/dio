@@ -8,3 +8,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: jdbc_sample
+  adminer:
+    image: adminer
+    ports:
+      - 9000:8080
