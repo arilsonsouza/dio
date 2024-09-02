@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 import org.flywaydb.core.Flyway;
 
 import com.aos.persistence.entity.Employee;
+import com.aos.persistence.entity.EmployeeAuditDAO;
 import com.aos.persistence.entity.EmployeeDAO;
 
 /**
@@ -14,6 +15,7 @@ import com.aos.persistence.entity.EmployeeDAO;
  */
 public class App {
     private final static EmployeeDAO employeeDAO = new EmployeeDAO();
+    private final static EmployeeAuditDAO employeeAuditDAO = new EmployeeAuditDAO();
 
     public static void main(String[] args) {
         var flyway = Flyway.configure()
@@ -44,5 +46,8 @@ public class App {
 
         System.out.println("DELETE");
         employeeDAO.delete(1);
+
+        System.out.println("LIST EMPLOYEE AUDIT LOGS VIEW");
+        employeeAuditDAO.findAll().forEach(System.out::println);
     }
 }
