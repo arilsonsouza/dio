@@ -49,5 +49,9 @@ public class App {
 
         System.out.println("LIST EMPLOYEE AUDIT LOGS VIEW");
         employeeAuditDAO.findAll().forEach(System.out::println);
+
+        System.out.println("INSERT WITH PROCEDURE");
+        employee.setName("PROCEDURE USER");
+        employeeDAO.insertWithProcedure(employee);
     }
 }

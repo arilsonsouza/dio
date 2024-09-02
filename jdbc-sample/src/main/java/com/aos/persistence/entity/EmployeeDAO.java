@@ -42,6 +42,20 @@ public class EmployeeDAO {
     }
   }
 
+  public void insertWithProcedure(final Employee employee) {
+    try {
+      String sql = "call prc_insert_employee(?, ?, ?)";
+      var statement = connection.prepareStatement(sql);
+      statement.setString(1, employee.getName());
+      statement.setBigDecimal(2, employee.getSalary());
+      statement.setTimestamp(3, asTimestamp(employee.getBirthday()));
+      statement.execute();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void update(final Employee employee) {
     try {
       String sql = "UPDATE employees SET name=?, salary=?, birthday=? WHERE id=?";
