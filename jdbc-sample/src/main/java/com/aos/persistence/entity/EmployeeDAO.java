@@ -42,6 +42,30 @@ public class EmployeeDAO {
     }
   }
 
+  public void insertBatch(final List<Employee> employees) {
+    String sql = "INSERT INTO employees(name, salary, birthday) VALUES(?, ?, ?) RETURNING id";
+    try (var statement = connection.prepareStatement(sql)) {
+      connection.setAutoCommit(false);
+      for (int i = 0; i < employees.size(); i++) {
+        statement.setString(1, employees.get(i).getName());
+        statement.setBigDecimal(2, employees.get(i).getSalary());
+        statement.setTimestamp(3, asTimestamp(employees.get(i).getBirthday()));
+        statement.addBatch();
+        if (i % 1000 == 0 || i == employees.size() - 1)
+          statement.executeBatch();
+      }
+      connection.commit();
+      System.out.printf("Foram afetados %s registros no DB", statement.getUpdateCount());
+    } catch (SQLException e) {
+      try {
+        connection.rollback();
+      } catch (SQLException e1) {
+        e1.printStackTrace();
+      }
+      e.printStackTrace();
+    }
+  }
+
   public void insertWithProcedure(final Employee employee) {
     try {
       String sql = "call prc_insert_employee(?, ?, ?)";
