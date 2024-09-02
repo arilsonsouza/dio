@@ -136,17 +136,24 @@ public class EmployeeDAO {
   public Employee findById(final long id) {
     Employee employee = new Employee();
     try {
-      String sql = "SELECT id, name, salary, birthday FROM employees WHERE id = ?";
+      String sql = "SELECT e.id, e.name, e.salary, e.birthday, c.id AS contact_id, c.name AS contact_name, c.type "
+          + "FROM employees e JOIN contacts c ON c.employee_id = e.id WHERE e.id = ?";
       var statement = connection.prepareStatement(sql);
       statement.setLong(1, id);
       ResultSet rs = statement.executeQuery();
       if (rs.next()) {
+        Contact contact = new Contact();
+        contact.setId(rs.getLong("contact_id"));
+        contact.setName(rs.getString("contact_name"));
+        contact.setType(rs.getString("type"));
+
         employee.setId(rs.getLong("id"));
         employee.setName(rs.getString("name"));
         employee.setSalary(rs.getBigDecimal("salary"));
         var birthdayInstant = rs.getTimestamp("birthday").toInstant();
         var birthday = OffsetDateTime.ofInstant(birthdayInstant, ZoneOffset.UTC);
         employee.setBirthday(birthday);
+        employee.setContact(contact);
       }
     } catch (SQLException e) {
       e.printStackTrace();

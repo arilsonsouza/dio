@@ -16,4 +16,5 @@ public class Employee {
 
   private OffsetDateTime birthday;
 
+  private Contact contact;
 }
