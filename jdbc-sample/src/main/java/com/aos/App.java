@@ -86,6 +86,12 @@ public class App {
         contact.setEmployeeId(employee.getId());
         contactDAO.insert(contact);
 
+        Contact contactPhone = new Contact();
+        contactPhone.setName("123456789");
+        contactPhone.setType("phone");
+        contactPhone.setEmployeeId(employee.getId());
+        contactDAO.insert(contactPhone);
+
         System.out.println(employeeDAO.findById(employee.getId()));
     }
 }

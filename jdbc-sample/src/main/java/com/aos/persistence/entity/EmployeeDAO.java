@@ -142,10 +142,6 @@ public class EmployeeDAO {
       statement.setLong(1, id);
       ResultSet rs = statement.executeQuery();
       if (rs.next()) {
-        Contact contact = new Contact();
-        contact.setId(rs.getLong("contact_id"));
-        contact.setName(rs.getString("contact_name"));
-        contact.setType(rs.getString("type"));
 
         employee.setId(rs.getLong("id"));
         employee.setName(rs.getString("name"));
@@ -153,7 +149,15 @@ public class EmployeeDAO {
         var birthdayInstant = rs.getTimestamp("birthday").toInstant();
         var birthday = OffsetDateTime.ofInstant(birthdayInstant, ZoneOffset.UTC);
         employee.setBirthday(birthday);
-        employee.setContact(contact);
+
+        do {
+          Contact contact = new Contact();
+          contact.setId(rs.getLong("contact_id"));
+          contact.setName(rs.getString("contact_name"));
+          contact.setType(rs.getString("type"));
+
+          employee.addContact(contact);
+        } while (rs.next());
       }
     } catch (SQLException e) {
       e.printStackTrace();

@@ -2,6 +2,8 @@ package com.aos.persistence.entity;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,5 +18,9 @@ public class Employee {
 
   private OffsetDateTime birthday;
 
-  private Contact contact;
+  private List<Contact> contacts = new ArrayList<>();
+
+  public void addContact(Contact contact) {
+    this.contacts.add(contact);
+  }
 }
