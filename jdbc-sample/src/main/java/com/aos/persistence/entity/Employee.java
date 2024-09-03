@@ -20,7 +20,13 @@ public class Employee {
 
   private List<Contact> contacts = new ArrayList<>();
 
+  private List<Module> modules = new ArrayList<>();
+
   public void addContact(Contact contact) {
     this.contacts.add(contact);
+  }
+
+  public void addModule(Module module) {
+    this.modules.add(module);
   }
 }

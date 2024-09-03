@@ -14,6 +14,7 @@ import com.aos.persistence.ConnectionUtil;
 public class EmployeeDAO {
 
   private Connection connection;
+  private final static EmployeeModuleDAO employeeModuleDAO = new EmployeeModuleDAO();
 
   public EmployeeDAO() {
     try {
@@ -36,6 +37,7 @@ public class EmployeeDAO {
       System.out.printf("Foram afetados %s registros no DB", statement.getUpdateCount());
       if (rs.next()) {
         employee.setId(rs.getLong(1));
+        employee.getModules().stream().map(Module::getId).forEach(m -> employeeModuleDAO.insert(employee.getId(), m));
       }
     } catch (SQLException e) {
       e.printStackTrace();
