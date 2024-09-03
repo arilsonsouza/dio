@@ -1,0 +1,6 @@
+CREATE TABLE employees(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  salary DECIMAL(10, 2) NOT NULL,
+  birthday TIMESTAMP NOT NULL
+);
