@@ -1,0 +1,14 @@
+version: "3.2"
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: jdbc_sample
+  adminer:
+    image: adminer
+    ports:
+      - 9000:8080
